@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Đăng nhập</title>
+        <link rel="shortcut icon" type="image/png" href="images/icon.png"/>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <script src="js/jquery-3.3.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="module/func.js"></script>
+    <script src="db/Students.js"></script>
+    <script src="js/angular.min.js"></script>
+
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css' />
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css' />
+        <style>
+            @import url(&quot;https://fonts.googleapis.com/css?family=Raleway:400,700&quot;);
+            *, *:before, *:after {
+                box-sizing: border-box;
+            }
+
+            body {
+                min-height: 100vh;
+                font-family: 'Raleway', sans-serif;
+            }
+
+            .container {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            .container:hover .top:before, .container:hover .top:after, .container:hover .bottom:before, .container:hover .bottom:after, .container:active .top:before, .container:active .top:after, .container:active .bottom:before, .container:active .bottom:after {
+                margin-left: 200px;
+                transform-origin: -200px 50%;
+                transition-delay: 0s;
+            }
+            .container:hover .center, .container:active .center {
+                opacity: 1;
+                transition-delay: 0.2s;
+            }
+
+            .top:before, .top:after, .bottom:before, .bottom:after {
+                content: '';
+                display: block;
+                position: absolute;
+                width: 200vmax;
+                height: 200vmax;
+                top: 50%;
+                left: 50%;
+                margin-top: -100vmax;
+                transform-origin: 0 50%;
+                transition: all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
+                z-index: 10;
+                opacity: 0.65;
+                transition-delay: 0.2s;
+            }
+
+            .top:before {
+                transform: rotate(45deg);
+                background: #e46569;
+            }
+            .top:after {
+                transform: rotate(135deg);
+                background: #ecaf81;
+            }
+
+            .bottom:before {
+                transform: rotate(-45deg);
+                background: #60b8d4;
+            }
+            .bottom:after {
+                transform: rotate(-135deg);
+                background: #3745b5;
+            }
+
+            .center {
+                position: absolute;
+                width: 400px;
+                height: 400px;
+                top: 50%;
+                left: 50%;
+                margin-left: -200px;
+                margin-top: -200px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 30px;
+                opacity: 0;
+                transition: all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
+                transition-delay: 0s;
+                color: #333;
+            }
+            .center input {
+                width: 100%;
+                padding: 15px;
+                margin: 5px;
+                border-radius: 1px;
+                border: 1px solid #ccc;
+                font-family: inherit;
+            }
+        </style>
+
+        <script>
+            window.console = window.console || function (t) {};
+        </script>
+
+        <script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js&quot;></script>
+
+    </head>
+    <body ng-app="ps10511">
+        
+        
+       <div class="container" ng-controller="ps10511_controller" onclick="onclick">
+        
+        <div class="top"></div>
+        <div class="bottom"></div>
+        <div class="center">
+            <h2>Vui lòng đăng nhập
+	<form>
+            </h2>
+            
+	<input id="username" ng-model="username" placeholder="Tài khoản"/>
+            
+<input type="password" ng-model="password" id="password" placeholder="Mật khẩu"/>            
+            
+            <input class="btn btn-primary" type="submit" ng-click="login()" value="Đăng nhập" name="Action">
+            <font color="{{colorLogin}}">{{messageLogin}}</font> <img ng-show="checking == 1" width="50px" height="50px" src="https://media2.giphy.com/media/3oEjI6SIIHBdRxXI40/200.gif">
+            </form>
+                <div class="separator">
+                    <p class="change_link">Chưa có tài khoản?
+                            <a href="register.html" class="to_register"> Đăng ký </a>
+                        </p>
+                         <p class="change_link">Quên mật khẩu?
+                            <a href="forgetPassword.html" class="to_register"> Quên mật khẩu </a>
+                        </p>
+
+                        <div class="clearfix"></div>
+                        <br>
+
+                        
+                    </div>
+        </div>
+    </div>
+
+    <script>
+        var statusLogin = checkLogin();
+        
+
+        var app = angular.module("ps10511", []);
+
+        app.controller("ps10511_controller", function($scope){
+            
+            $scope.statusLogin = false;
+            $scope.checking = 0;
+                $scope.login = function (){
+                    try {
+                        var u = $scope.username;
+                    var p = $scope.password;
+
+                   
+                    if(u.length < 5 || p.length < 5){
+                        $scope.colorLogin = "red";
+                        $scope.messageLogin = "Tài khoản hoặc mật khẩu quá ngắn. Ít nhất 5 ký tự."
+                    }else{
+                        $scope.colorLogin = "green";
+                    $scope.checking = 1;
+                    $scope.messageLogin = "Đang kiểm tra thông tin đăng nhập...";
+                        $.each(students, function(i, e){
+                            if(u == e.username && p == e.password){
+                                sessionStorage.setItem("username", e.username);
+                    sessionStorage.setItem("fullname", e.fullname);
+                    sessionStorage.setItem("email", e.email);
+                    sessionStorage.setItem("gender", e.gender);
+                    sessionStorage.setItem("birthday", e.birthday);
+                    sessionStorage.setItem("schoolfee", e.schoolfee);
+                    sessionStorage.setItem("marks", e.marks);
+                    sessionStorage.setItem("statusLogin", 1);
+                    sessionStorage.setItem("password", e.password);
+                                $scope.colorLogin =  "blue";
+                                $scope.messageLogin = "Đăng nhập thành công, đang chuyển hướng...";
+                                $scope.statusLogin = true;
+                                
+                                return;
+                            }
+                        })
+
+                        if($scope.statusLogin){
+
+                            setTimeout(function (){
+                                    $scope.checking = 0;
+                                    document.location = "home.html";
+                                }, 3000);
+                        }else{
+                            $scope.checking = 0;
+                            $scope.messageLogin = "Sai tài khoản hoặc mật khẩu";
+                            $scope.colorLogin = "red";
+                        }
+                    }
+                    } catch (error) {
+                        $scope.colorLogin = "red";
+                        $scope.messageLogin = "Vui lòng nhập thông tin đăng nhập";
+                    }
+                   
+                }
+        })
+    </script>
+    </body>
+</html>

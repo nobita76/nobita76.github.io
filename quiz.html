@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" type="image/png" href="images/icon.png"/>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <link rel="stylesheet" href="css/bai5.css">
+  <script src="js/angular.min.js"></script>
+  <script src="js/angular-route.js"></script>
+  <script src="db/Subjects.js"></script>
+  <style>
+      
+  
+  .pricing .card {
+    border: none;
+    border-radius: 1rem;
+    transition: all 0.2s;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  }
+  
+  .pricing hr {
+    margin: 1.5rem 0;
+  }
+  
+  .pricing .card-title {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+  }
+  
+  .pricing .card-price {
+    font-size: 3rem;
+    margin: 0;
+  }
+  
+  .pricing .card-price .period {
+    font-size: 0.8rem;
+  }
+  
+  .pricing ul li {
+    margin-bottom: 1rem;
+  }
+  
+  .pricing .text-muted {
+    opacity: 0.7;
+  }
+  
+  .pricing .btn {
+    font-size: 80%;
+    border-radius: 5rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+    padding: 1rem;
+    opacity: 0.7;
+    transition: all 0.2s;
+  }
+  
+  /* Hover Effects on Card */
+  
+  @media (min-width: 992px) {
+    .pricing .card:hover {
+      margin-top: -.25rem;
+      margin-bottom: .25rem;
+      box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+    }
+    .pricing .card:hover .btn {
+      opacity: 1;
+    }
+  }
+  </style>
+    <style type="text/css">
+        
+.nav-link[data-toggle].collapsed:before {
+    content: " ▾";
+}
+.nav-link[data-toggle]:not(.collapsed):before {
+    content: " ▴";
+}
+    </style>
+</head>
+<body ng-app="app">
+<div class="container-fluid">
+
+
+    
+    <div class="row" ng-controller="DanhMuc_controller"> 
+        <div class="col-2 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100" id="sidebar">
+            <ul class="nav flex-column flex-nowrap overflow-hidden">
+                <li class="nav-item">
+                    <a class="nav-link text-truncate" href="home.html"><i class="fa fa-home"></i> <span class="d-none d-sm-inline">Trang chủ</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed text-truncate" href="#submenu1" data-toggle="collapse" data-target="#submenu1"><i class="fa fa-table"></i> <span class="d-none d-sm-inline">Khóa học</span></a>
+                    <div class="collapse" id="submenu1" aria-expanded="false">
+                        <ul class="flex-column pl-2 nav">
+
+                            
+                          <li ng-repeat="subject in subjects" class="nav-item">
+                            <a class="nav-link collapsed py-0" href="#submenu1sub1{{subject.Id}}" data-toggle="collapse" data-target="#submenu1sub1{{subject.Id}}"><span> {{subject.Name}}</span></a>
+                            <div class="collapse" id="submenu1sub1{{subject.Id}}" aria-expanded="false">
+                                <ul class="flex-column nav pl-4">
+                                    <li class="nav-item">
+                                        <a class="nav-link p-1" href="quiz.html#!/ps10511/{{subject.Id}}">
+                                            <i class="fa fa-fw fa-clock-o"></i> Làm bài </a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item"><a class="nav-link text-truncate" href="history.html"><i class="fa fa-bar-chart"></i><i class="fas fa-history"></i> <span class="d-none d-sm-inline">Lịch sử làm bài</span></a></li>
+            </ul>
+        </div>
+        <div class="col pt-2">
+          <div ng-view></div>
+          <!--  <div class="card ">
+            <div class="card-header">
+                TÊN MÔN
+            </div>
+            <div class="card-body">
+                <p>NỘI DUNG CÂU HỎI </i> <span style="float: right;" > Còn lại <span class="badge badge-pill badge-info">0
+                    </span></span></p>
+
+                <hr>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                        value="option1">
+                    <label class="form-check-label" for="inlineRadio1">1</label>
+                </div>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                        value="option2">
+                    <label class="form-check-label" for="inlineRadio2">2</label>
+                </div>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+                        value="option3">
+                    <label class="form-check-label" for="inlineRadio3">3 </label>
+                </div>
+                <div class="form-check ">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4"
+                        value="option4">
+                    <label class="form-check-label" for="inlineRadio4">4 </label>
+                </div>
+
+            </div>
+            <div class="card-footer text-muted">
+                1/50 || <span class="badge badge-pill badge-success">0</span> Đúng || <span class="badge badge-pill badge-danger">0</span> Sai
+
+               <span style="float: right;"> Bạn đã đạt được <span class="badge badge-pill badge-primary">0</span> điểm</span>
+            </div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+              </div>
+            <div class="card-footer text-muted">
+                <div class="but text-center">
+                    <button type="button" class="btn btn-outline-primary"><i class="fas fa-step-backward"></i></button>
+                    <button type="button" class="btn btn-outline-primary"><i class="fas fa-backward"></i></button>
+                    <button type="button" class="btn btn-outline-primary"><i class="fas fa-forward"></i></button>
+                    <button type="button" class="btn btn-outline-primary"><i class="fas fa-step-forward"></i></button>
+                </div>
+            </div>
+        </div>-->
+        <br>
+
+        <div class="alert alert-primary" role="alert">
+            Bạn có thể xem thêm hoặc làm bài khác <a class="btn btn-primary" data-toggle="collapse" href="#!collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Tại đây
+              </a>
+          </div>
+          <div class="collapse" id="#!collapseExample">
+        <section class="pricing py-5">
+
+
+          <div ng-view></div>
+            
+          </section>
+        </div>
+        </div>
+    </div>
+    <footer data-spy="scroll" data-target="#navbar-example2" data-offset="0" class="scrollspy-example">
+        <div class="footer-top" >
+          <div class="container">
+            <div class="row">
+              <div class="col-md-3 footer-about wow fadeInUp">
+                <h3>Thông tin về chúng tôi</h3>
+                <p>
+                  Đang là một website thi trắc nghiệm trực tuyến được triển khai với hình thức SPA và sử dụng công nghệ Bootstrap cũng như AngularJS làm ra một sản phẩm tuyệt vời như thế này. Vì vậy hãy sử dụng một cách hiểu quả nhất cho quá trình học tập của bạn. Chúng bạn học zui.
+                </p>
+                <p>&copy; Company Inc.</p>
+                    </div>
+              <div class="col-md-4 offset-md-1 footer-contact wow fadeInDown">
+                <h3 id="contact">Liên hệ</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> CV Phần Mềm Quang Trung</p>
+                    <p><i class="fas fa-phone"></i> Phone: (84) 123456789</p>
+                    <p><i class="fas fa-envelope"></i> Email: <a href="mailto:thanhbnps10511@fpt.edu.vn">thanhbnps10511@fpt.edu.vn</a></p>
+                    <p><i class="fab fa-skype"></i> Facebook: Hi</p>
+                    </div>
+                    <div class="col-md-4 footer-links wow fadeInUp">
+                      <div class="row">
+                        <div class="col">
+                          <h3>Links</h3>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><a class="scroll-link" href=home.html>Trang chủ</a></p>
+                          <p><a href="danhmuc.html">Danh Mục</a></p>
+                         
+                        </div>
+                        <div class="col-md-6">
+                          <p><a href="home.html">Liên hệ</a></p>
+                          <p><a href="home.html">Góp ý</a></p>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div class="container">
+            <div class="row">
+                 <div class="col footer-social">
+                      <a href="http://Nobita76.Info"><i class="fab fa-facebook-f"></i></a> 
+            <a href="http://Nobita76.Info"><i class="fab fa-twitter"></i></a> 
+            <a href="http://Nobita76.Info"><i class="fab fa-google-plus-g"></i></a> 
+            <a href="http://Nobita76.Info"><i class="fab fa-instagram"></i></a> 
+            <a href="http://Nobita76.Info"><i class="fab fa-pinterest"></i></a>
+                    </div>
+               </div>
+          </div>
+        </div>
+      </footer>
+      
+</div>
+
+
+
+<script src="scripts/jquery-3.3.1.slim.min.js"></script>
+  <script src="scripts/popper.min.js"></script>
+  <script src="scripts/bootstrap.min.js"></script>
+
+
+  <script>
+
+
+    var app = angular.module("app", ["ngRoute"]);
+    app.config(function ($routeProvider){
+      $routeProvider
+      .when("/ps10511/:tenmon", {templateUrl:"ps10511.html", controller:"startQuizz"})
+      .when("/collapseExample", {templateUrl:"html/danhmuc.html", controller: "collapse"})
+    })
+
+    app.filter('toMinSec', function(){
+  return function(input){
+    var minutes = parseInt(input/60, 10);
+    var seconds = input%60;
+
+    return minutes+' phút'+(seconds ? ' và '+seconds+' giây' : '');
+  }
+})
+
+app.controller("collapse", function($scope){
+      $scope.subjects = subjects;
+      $scope.start = 0;
+      $scope.page = 4;
+
+
+      $scope.next = function (){
+        if($scope.start < ($scope.subjects.length - $scope.page)){
+          $scope.start += $scope.page;
+        }else{
+          $scope.start = 0;
+        }
+      }
+
+      $scope.prev = function (){
+
+        if($scope.start < ($scope.subjects.length - $scope.page)){
+            
+            $scope.start -= $scope.page;
+          }else{
+            $scope.start = $scope.subjects.length - $scope.page;
+            
+          }
+      }
+
+
+    })
+
+    app.controller("DanhMuc_controller", function($scope){
+      $scope.subjects = subjects;
+
+    });
+  app.controller("abc", function($scope){
+    console.log('hihi');
+  })
+
+    app.controller("startQuizz", function($scope, $http, $routeParams, $interval){
+      $scope.idSubject = $routeParams.tenmon; //Mã môn quizz
+      $scope.subjects = subjects; //List môn
+      $scope.infoSubject = {}; //Thông tin môn
+      $scope.start = 0; //câu bắt đầu
+      $scope.page = 1; //Phân trang
+      $scope.mark = 0; //Điểm
+      $scope.diemMoiCau = 0; //Điểm làm đúng
+      $scope.dataQuizz = []; //List câu hỏi
+      $scope.answer = ""; //Câu trả lời
+      $scope.progress = 0; //Tiến trình
+      $scope.correct = 0; //Câu đúng
+      $scope.incorrect = 0; //Câu sai
+
+      $scope.timeEachQuestion = 30; //thời gian mỗi câu
+
+      $scope.answered = []; //List câu đã trả lời
+
+      $scope.confirm = 0; //Xác nhận trả lời
+      $scope.totalTime = 0; //Tổng thời gian (Thời gian mỗi câu * tổng số câu quizz)
+
+      $scope.hetGio = false; //Kiểm tra hết giờ
+
+      $scope.currentQuestion; //Câu đang làm
+      $scope.currentAnswer; //Câu đang trả lời  
+      $scope.watch; //Interval đồng hồ
+
+      $scope.showButtonDone = true; //Show buttn nạp bài
+
+
+      $scope.nopopup = false;
+      console.log(subjects);
+
+      $.each($scope.subjects, function(i, value){
+        if(value.Id == $scope.idSubject){
+          $scope.infoSubject = value;
+        }
+      })
+
+      //Đồng hồ
+      
+      $scope.startCountTime = function (){
+        $scope.watch = $interval(function (){
+              --$scope.totalTime;
+              if($scope.totalTime <= 0){
+                //Hết thời gian làm bài
+                $scope.hetGio = true;
+                $interval.cancel($scope.watch);
+                $("#modalFinal").modal('show')
+              }
+
+            }, 1000);
+      }
+
+       
+
+      $http.get('db/Quizs/'+$scope.infoSubject.Id+'.js').then(
+          function(r) {
+            $scope.dataQuizz = r.data;
+
+            $scope.totalTime = $scope.timeEachQuestion*$scope.dataQuizz.length;
+
+            $scope.startCountTime();
+            console.log(r);
+          }, function(e){
+            console.log(e);
+          })
+      
+
+      $scope.next = function (data, choice){
+        
+        /*if($scope.start == 1){
+          $scope.progress += (100/$scope.dataQuizz.length);
+        }*/
+        if($scope.start < ($scope.dataQuizz.length - $scope.page)){
+         
+          $scope.start += $scope.page;
+        }
+      }
+
+
+      $scope.prev = function (){
+        if($scope.start <= ($scope.dataQuizz.length - $scope.page)){
+            
+            $scope.start -= $scope.page;
+          }
+      }
+
+      $scope.first = function (){
+          $scope.start = 0;
+        }
+        $scope.last = function (){
+          sotrang = Math.ceil($scope.dataQuizz.length/$scope.page);
+          $scope.start = (sotrang - 1) * $scope.page;
+        }
+        
+
+      $scope.setValueConfirm = function (value){
+          $scope.confirm = value;
+          if($scope.confirm == 1){
+             $scope.progress += (Number(100/$scope.dataQuizz.length));
+            $scope.answered.push($scope.currentQuestion.Id);
+            //Xác nhận trả lời
+            $("#myModal").modal("hide");
+            if($scope.currentAnswer.Id == $scope.currentQuestion.AnswerId){
+              //Trả lời đúng
+              ++$scope.correct;
+              $scope.diemMoiCau = (10/$scope.dataQuizz.length);
+              $scope.mark += $scope.diemMoiCau;
+
+              $scope.next();
+            }else{
+              //Trả lời sai
+              ++$scope.incorrect;
+              $scope.next();
+            }
+          }else{
+            $("#myModal").modal("hide");
+          }
+          
+      }
+
+
+      $scope.kiemTraDaTraLoiChua = function(data){
+        if($scope.hetGio){
+          return true;
+        }
+        var status = false;
+        $.each($scope.answered, function(i, value){
+          if(value == data.Id){
+            status = true;
+            return status;
+          }
+        })
+        $scope.statusLogin = sessionStorage.getItem("statusLogin");
+        if($scope.statusLogin == null){
+          return true;
+        }
+
+        return status;
+      }
+
+
+      $scope.checkQuestion = function(data, choice){
+        if($scope.nopopup){
+          $scope.setValueConfirm(1);
+        }else{
+          $("#myModal").modal('show');
+
+        }
+        console.log(data);
+        console.log(choice);
+       /* if(choice.Id == data.AnswerId){
+          $scope.diemMoiCau = (10/$scope.dataQuizz.length);
+          console.log($scope.diemMoiCau);
+          $scope.mark += $scope.diemMoiCau;
+        }*/
+        $scope.currentQuestion = data;
+        $scope.currentAnswer = choice;
+      }
+
+      //Kết thúc sớm bài quizz
+      $scope.doneQuizz = function(){
+        $scope.hetGio = true;
+                $interval.cancel($scope.watch);
+                $("#modalFinal").modal('show')
+      }
+
+
+      $scope.setStart = function(index){
+        $scope.start = index;
+      }
+    })
+
+
+    
+
+  </script>
+</body>
+</html>

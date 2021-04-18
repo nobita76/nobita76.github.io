@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
+    <title>Au Register Forms by Colorlib</title>
+
+    <!-- Icons font CSS-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/angular.min.js"></script>
+    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="css/main.css" rel="stylesheet" media="all">
+</head>
+
+<body ng-app="ps10511">
+    <div class="page-wrapper bg-blue p-t-100 p-b-100 font-robo" ng-controller="register_controller">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-1">
+                <div class="card-heading"></div>
+                <div class="card-body">
+                    <h2 class="title">Đăng ký tài khoản</h2>
+                    <form name="formDangKy">
+                        <div class="input-group">
+                            <input class="input--style-1" type="text" ng-model="username" required ng-minlength="5" ng-maxlength="20" placeholder="TÀI KHOẢN" name="username">
+                            
+                        </div>
+                        <div ng-show="formDangKy.username.$invalid" class="badge badge-danger font-italic">
+                            Tài khoản đăng ký phải ít nhất 5 ký tự và nhiều nhất 25 ký tự
+                        </div>
+                        
+                        <div class="input-group">
+                            <input class="input--style-1" type="password" ng-model="password" required ng-minlength="5" placeholder="MẬT KHẨU" name="password">
+                        </div>
+                        <div ng-show="formDangKy.password.$invalid" class="badge badge-danger font-italic">
+                            Mật khẩu đăng ký phải ít nhất 5 ký tự
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-6">
+                                <div class="input-group">
+                            <input class="input--style-1" type="text" ng-model="fullname" required ng-minlength="5" placeholder="HỌ VÀ TÊN" name="fullname">
+                                    
+                        </div>
+                        <div ng-show="formDangKy.fullname.$invalid" class="badge badge-danger font-italic">
+                            Vui lòng nhập họ và tên
+                        </div>
+                             
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group">
+                        <input class="input--style-1" type="email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" ng-model="email" required placeholder="EMAIL" name="email">
+                         </div>
+                         <div ng-show="formDangKy.email.$invalid" class="badge badge-danger font-italic">
+                            Vui lòng nhập đúng định dạng email
+                        </div>
+                    </div>
+                    </div>
+                        <div class="row row-space">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    
+                                    <input class="input--style-1 js-datepicker" type="text" ng-model="birthday" placeholder="NGÀY SINH" name="birthday">
+                                    <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="rs-select2 js-select-simple select--no-search">
+                                        <select name="gender">
+                                            <option disabled="disabled" selected="selected">GIỚI TÍNH</option>
+                                            <option value="true">Nam</option>
+                                            <option value="false">Nữ</option>
+                                        </select>
+                                        <div class="select-dropdown"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="registerError" class="badge badge-danger font-italic">
+                            {{messageError}}
+                        </div>
+                        <div ng-show="registerSuccess" class="badge badge-success font-italic">
+                            {{messageSuccess}}
+                        </div>
+                        <div class="p-t-20">
+                            <button class="btn btn--radius btn--green" ng-disabled="formDangKy.$invalid" ng-click="dangky()" type="submit">Đăng ký</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/datepicker/moment.min.js"></script>
+    <script src="vendor/datepicker/daterangepicker.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <!-- Main JS-->
+    <script src="js/global.js"></script>
+    <script src="db/Students.js"></script>
+
+
+    <script>
+        var app = angular.module("ps10511", []);
+
+        app.controller("register_controller", function ($scope){
+            $scope.registerError = false;
+            $scope.messageError = "PS10511";
+
+            $scope.registerSuccess = false;
+            $scope.messageSuccess = "PS10511";
+            $scope.check = 0; //Kiểm tra tài khoản tồn tại || 0 chưa đăng ký, 1 đã đăng ký
+
+            $scope.dangky = function (){
+
+                $.each(students, function(i, value){
+                    if(value.username == $scope.username){
+                        $scope.check = 1; //Tài khoản tồn tại
+                    }
+                })
+
+                if($scope.check == 1){
+                    $scope.registerSuccess = false;
+                    $scope.registerError = true;
+                    $scope.messageError = "Tài khoản "+$scope.username+" đã được đăng ký";
+                }else{
+                    try {
+                    var infoRegister = {
+                    username: $scope.username,
+                    password: $scope.password,
+                    fullname: $scope.fullname,
+                    email: $scope.email,
+                    gender: document.getElementsByName("gender")[0].value,
+                    birthday: document.getElementsByName('birthday')[0].value,
+                    schoolfee: "0",
+                    marks: "0"
+                }
+
+                students.push(infoRegister);
+                $scope.registerError = false;
+                $scope.registerSuccess = true;
+                $scope.messageSuccess = "Tài khoản "+$scope.username+" đã đăng ký thành công, đợi 3s tài khoản sẽ tự động đăng nhập";
+                console.log(students);
+                } catch (error) {
+                    
+                }
+                }
+
+
+                
+
+
+            }
+        })
+
+
+    </script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+</html>
+<!-- end document-->

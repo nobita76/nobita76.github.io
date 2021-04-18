@@ -1,0 +1,9 @@
+a#chotdon:hover {
+    color: lightblue;
+}
+div.card-body > h5 {
+    color: red;
+}
+div.card-header {
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Danh mục môn</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="shortcut icon" type="image/png" href="images/icon.png"/>
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <link rel="stylesheet" href="css/bai5.css">
+  <script src="js/angular.min.js"></script>
+  <script src="db/Subjects.js"></script>
+  
+  <style>
+      
+  
+  .pricing .card {
+    border: none;
+    border-radius: 1rem;
+    transition: all 0.2s;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  }
+  
+  .pricing hr {
+    margin: 1.5rem 0;
+  }
+  
+  .pricing .card-title {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+  }
+  
+  .pricing .card-price {
+    font-size: 3rem;
+    margin: 0;
+  }
+  
+  .pricing .card-price .period {
+    font-size: 0.8rem;
+  }
+  
+  .pricing ul li {
+    margin-bottom: 1rem;
+  }
+  
+  .pricing .text-muted {
+    opacity: 0.7;
+  }
+  
+  .pricing .btn {
+    font-size: 80%;
+    border-radius: 5rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+    padding: 1rem;
+    opacity: 0.7;
+    transition: all 0.2s;
+  }
+  
+  /* Hover Effects on Card */
+  
+  @media (min-width: 992px) {
+    .pricing .card:hover {
+      margin-top: -.25rem;
+      margin-bottom: .25rem;
+      box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+    }
+    .pricing .card:hover .btn {
+      opacity: 1;
+    }
+  }
+  </style>
+    <style type="text/css">
+        
+.nav-link[data-toggle].collapsed:before {
+    content: " ▾";
+}
+.nav-link[data-toggle]:not(.collapsed):before {
+    content: " ▴";
+}
+    </style>
+</head>
+<body ng-app="app">
+<div class="container-fluid">
+    <div class="row" ng-controller="DanhMuc_controller">
+        <div class="col-2 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100" id="sidebar">
+            <ul class="nav flex-column flex-nowrap overflow-hidden">
+                <li class="nav-item">
+                    <a class="nav-link text-truncate" href="home.html"><i class="fa fa-home"></i> <span class="d-none d-sm-inline">Trang chủ</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed text-truncate" href="#submenu1" data-toggle="collapse" data-target="#submenu1"><i class="fa fa-table"></i> <span class="d-none d-sm-inline">Khóa học</span></a>
+                    <div class="collapse" id="submenu1" aria-expanded="false">
+                        <ul class="flex-column pl-2 nav">
+                          <li ng-repeat="subject in subjects" class="nav-item">
+                            <a class="nav-link collapsed py-0" href="#submenu1sub1{{subject.Id}}" data-toggle="collapse" data-target="#submenu1sub1{{subject.Id}}"><span> {{subject.Name}}</span></a>
+                            <div class="collapse" id="submenu1sub1{{subject.Id}}" aria-expanded="false">
+                                <ul class="flex-column nav pl-4">
+                                    <li class="nav-item">
+                                        <a class="nav-link p-1" href="quiz.html#!/ps10511/{{subject.Id}}">
+                                            <i class="fa fa-fw fa-clock-o"></i> Làm bài </a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </li>
+                            
+                           <!-- <li class="nav-item">
+                                <a class="nav-link collapsed py-0" href="#submenu1sub1" data-toggle="collapse" data-target="#submenu1sub1"><span> Lập trình Android</span></a>
+                                <div class="collapse" id="submenu1sub1" aria-expanded="false">
+                                    <ul class="flex-column nav pl-4">
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-clock-o"></i> Quiz 1 </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-dashboard"></i> Quiz 2 </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-bar-chart"></i> Quiz 3 </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-compass"></i> Quiz 4 </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link collapsed py-0" href="#submenu1sub2" data-toggle="collapse" data-target="#submenu1sub2"><span> Lập trình ASP.NET</span></a>
+                                <div class="collapse" id="submenu1sub2" aria-expanded="false">
+                                    <ul class="flex-column nav pl-4">
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-clock-o"></i> Quiz 1 </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-dashboard"></i> Quiz 2 </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-bar-chart"></i> Quiz 3 </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-compass"></i> Quiz 4 </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link collapsed py-0" href="#submenu1sub3" data-toggle="collapse" data-target="#submenu1sub3"><span> Lập trình Java</span></a>
+                                <div class="collapse" id="submenu1sub3" aria-expanded="false">
+                                    <ul class="flex-column nav pl-4">
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-clock-o"></i> Quiz 1 </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-dashboard"></i> Quiz 2 </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-bar-chart"></i> Quiz 3 </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-compass"></i> Quiz 4 </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>-->
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item"><a class="nav-link text-truncate" href="history.html"><i class="fa fa-bar-chart"></i><i class="fas fa-history"></i> <span class="d-none d-sm-inline">Lịch sử làm bài</span></a></li>
+            </ul>
+        </div>
+        <div class="col pt-2">
+            
+       
+        <section class="pricing py-3">
+
+
+
+            <div class="container">
+        
+        
+              <div class="row">
+                <div ng-repeat="subject in subjects | limitTo:page:start" class="col-lg-3 col-sm-3 col-md-3">
+                  <div class="card mb-5 mb-lg-0" style="width: 15rem;">
+                    <img class="card-img-top" src="images/logos/{{subject.Logo}}" style="height: 180px;width: 286px;" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">{{subject.Name}}</h5>
+                      <p class="card-text">Đây là một vài dòng giới thiệu về lập trình Android, nhưng mà em ko biết ghi gì nên em ghi như này cho nó dài dài.</p>
+                      <a href="quiz.html#!/ps10511/{{subject.Id}}" class="btn btn-primary">Start Quiz</a>
+                    </div>
+                  </div>
+
+
+                </div>
+
+                <!-- 
+                <div class="col-lg-3 col-sm-3 col-md-3">
+                  <div class="card mb-5 mb-lg-0" style="width: 15rem;">
+                    <img class="card-img-top" src="images/logos/ADAV.jpg" style="height: 180px;width: 286px;" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Lập trình Android</h5>
+                      <p class="card-text">Đây là một vài dòng giới thiệu về lập trình Android, nhưng mà em ko biết ghi gì nên em ghi như này cho nó dài dài.</p>
+                      <a href="quiz.html" class="btn btn-primary">Start Quiz</a>
+                    </div>
+                  </div>
+               
+                </div>
+                <div class="col-lg-3">
+                  <div class="card mb-5 mb-lg-0" style="width: 15rem;">
+                    <img class="card-img-top" src="images/logos/ASNE.png" style="height: 180px;width: 286px;" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Lập trình ASP.NET</h5>
+                      <p class="card-text">Đây là một vài dòng giới thiệu về lập trình NET, nhưng mà em ko biết ghi gì nên em ghi như này cho nó dài dài.</p>
+                      <a href="quiz.html" class="btn btn-primary">Start Quiz</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="card mb-5 mb-lg-0" style="width: 15rem;">
+                    <img class="card-img-top" src="images/logos/JAAV.png" style="height: 180px;width: 286px;" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Lập trình Java</h5>
+                      <p class="card-text">Đây là một vài dòng giới thiệu về lập trình Java, nhưng mà em ko biết ghi gì nên em ghi như này cho nó dài dài.</p>
+                      <a href="quiz.html" class="btn btn-primary">Start Quiz</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="card mb-5 mb-lg-0" style="width: 15rem;">
+                    <img class="card-img-top" src="images/logos/JSPR.png" style="height: 180px;width: 286px;" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Lập trình Javascipt
+                      </h5>
+                      <p class="card-text">Đây là một vài dòng giới thiệu về lập trình Javascript, nhưng mà em ko biết ghi gì nên em ghi như này cho nó dài dài.</p>
+                      <a href="quiz.html" class="btn btn-primary">Start Quiz</a>
+                    </div>
+                  </div>
+                </div>-->
+              </div>
+              <br>
+              <div class="row card-footer m-0">
+                <p class="text-center mx-auto"> 
+                    <button class="btn btn-outline-success" ng-click="prev()"><</button>
+                    <button class="btn btn-outline-success" ng-click="next()">></button>
+                </p>
+
+              </div>
+            </div>
+          </section>
+        </div>
+    </div>
+    <footer data-spy="scroll" data-target="#navbar-example2" data-offset="0" class="scrollspy-example">
+        <div class="footer-top" >
+          <div class="container">
+            <div class="row">
+              <div class="col-md-3 footer-about wow fadeInUp">
+                <h3>Thông tin về chúng tôi</h3>
+                <p>
+                  Đang là một website thi trắc nghiệm trực tuyến được triển khai với hình thức SPA và sử dụng công nghệ Bootstrap cũng như AngularJS làm ra một sản phẩm tuyệt vời như thế này. Vì vậy hãy sử dụng một cách hiểu quả nhất cho quá trình học tập của bạn. Chúng bạn học zui.
+                </p>
+                <p>&copy; Company Inc.</p>
+                    </div>
+              <div class="col-md-4 offset-md-1 footer-contact wow fadeInDown">
+                <h3 id="contact">Contact</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> CV Phần Mềm Quang Trung</p>
+                    <p><i class="fas fa-phone"></i> Phone: (84) 123456789</p>
+                    <p><i class="fas fa-envelope"></i> Email: <a href="mailto:thanhbnps10511@fpt.edu.vn">thanhbnps10511@fpt.edu.vn</a></p>
+                    <p><i class="fab fa-skype"></i> Facebook: Hi</p>
+                    </div>
+                    <div class="col-md-4 footer-links wow fadeInUp">
+                      <div class="row">
+                        <div class="col">
+                          <h3>Links</h3>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><a class="scroll-link" href=home.html>Trang chủ</a></p>
+                          <p><a href="danhmuc.html">Danh Mục</a></p>
+                         
+                        </div>
+                        <div class="col-md-6">
+                          <p><a href="home.html">Liên hệ</a></p>
+                          <p><a href="home.html">Góp ý</a></p>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div class="container">
+            <div class="row">
+                 <div class="col footer-social">
+                      <a href="http://Nobita76.Info"><i class="fab fa-facebook-f"></i></a> 
+            <a href="http://Nobita76.Info"><i class="fab fa-twitter"></i></a> 
+            <a href="http://Nobita76.Info"><i class="fab fa-google-plus-g"></i></a> 
+            <a href="http://Nobita76.Info"><i class="fab fa-instagram"></i></a> 
+            <a href="http://Nobita76.Info"><i class="fab fa-pinterest"></i></a>
+                    </div>
+               </div>
+          </div>
+        </div>
+      </footer>
+    
+</div>
+
+<script src="scripts/jquery-3.3.1.slim.min.js"></script>
+  <script src="scripts/popper.min.js"></script>
+  <script src="scripts/bootstrap.min.js"></script>
+
+
+  <script>
+    var app = angular.module("app", []);
+
+    app.controller("DanhMuc_controller", function($scope){
+      $scope.subjects = subjects;
+      $scope.start = 0;
+      $scope.page = 4;
+
+
+      $scope.next = function (){
+        if($scope.start < ($scope.subjects.length - $scope.page)){
+          $scope.start += $scope.page;
+        }else{
+          $scope.start = 0;
+        }
+      }
+
+      $scope.prev = function (){
+
+        if($scope.start < ($scope.subjects.length - $scope.page)){
+            
+            $scope.start -= $scope.page;
+          }else{
+            $scope.start = $scope.subjects.length - $scope.page;
+            
+          }
+      }
+
+
+    })
+
+
+  </script>
+</body>
+</html>

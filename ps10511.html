@@ -1,0 +1,88 @@
+<div class="card " ng-controller="startQuizz">
+    <div class="modal fade" id="myModal" role="dialog"> 
+        <div class="modal-dialog"> 
+          <!-- Modal content--> 
+           <div class="modal-content"> 
+              <div class="modal-body" style="padding:10px;"> 
+                <h4 class="text-center">Bạn có chắc chắn chọn câu trả lời này?</h4> 
+                <div class="text-center text-white"> 
+                  <a class="btn btn-success btn-yes" ng-click="setValueConfirm(1)">Đồng ý</a> 
+                  <a class="btn btn-danger btn-no" ng-click="setValueConfirm(0)">Chọn lại</a> <br>
+
+                  <input type="checkbox" id="nopopup" ng-model="nopopup" name="nopopup" value="true"><label for="nopopup"><font color="black">&nbsp;Không nhắc lại nội dung này</font></label>
+                </div> 
+              </div> 
+          </div> 
+       </div> 
+     </div>
+
+     <div class="modal fade" id="modalFinal" role="dialog"> 
+        <div class="modal-dialog"> 
+          <!-- Modal content--> 
+           <div class="modal-content"> 
+              <div class="modal-body" style="padding:50px;"> 
+                <h4 class="text-center">Bạn đã hoàn thành bài Quizz</h4> 
+                <div class="text-center"> 
+                  Bạn đã hoàn thành {{answered.length}}/{{dataQuizz.length}} câu<br>
+                  <span class="badge badge-pill badge-success">{{correct}}</span> Đúng || <span class="badge badge-pill badge-danger">{{incorrect}}</span> Sai<br>
+                  Bài test của bạn được đánh giá <span class="badge badge-pill badge-primary">{{mark | number: 2}}/10</span> điểm</span>
+                </div> 
+              </div> 
+          </div> 
+       </div> 
+     </div>
+    <div class="card-header">
+        {{infoSubject.Name}} <span ng-show="showButtonDone"><button class="btn btn-primary" ng-click="doneQuizz()">Kết thúc</button></span>
+    </div>
+    <div class="card-body" ng-repeat="quizz in dataQuizz | limitTo:page:start">
+        <p>{{quizz.Text}}</i> <span style="float: right;" > Còn lại <span class="badge badge-pill badge-info">{{totalTime | toMinSec}}
+            </span> <i class="fas fa-stopwatch"></i></span></p>
+
+        <hr>
+        <div class="form-check" ng-repeat="ans in quizz.Answers">
+            <input class="form-check-input" ng-disabled="kiemTraDaTraLoiChua(quizz)" type="radio" name="radio" id="{{ans.Id}}"
+                value="{{ans.Id}}" ng-click="checkQuestion(quizz, ans)">
+            <label class="form-check-label" for="{{ans.Id}}">{{ans.Text}}</label>
+        </div>
+        <!--<div class="form-check ">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                value="option2">
+            <label class="form-check-label" for="inlineRadio2">2</label>
+        </div>
+        <div class="form-check ">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+                value="option3">
+            <label class="form-check-label" for="inlineRadio3">3 </label>
+        </div>
+        <div class="form-check ">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4"
+                value="option4">
+            <label class="form-check-label" for="inlineRadio4">4 </label>
+        </div>-->
+
+    </div>
+    <div class="card-footer text-muted">
+        {{start+1}}/{{dataQuizz.length}} || <span class="badge badge-pill badge-success">{{correct}}</span> Đúng || <span class="badge badge-pill badge-danger">{{incorrect}}</span> Sai
+        
+       <span style="float: right;"> Bạn đã đạt được <span class="badge badge-pill badge-primary">{{mark | number: 2}}</span> điểm</span>
+        <br>
+       Các câu chưa làm:<br> <span  ng-repeat="quizz in dataQuizz | limitTo: 200:0">
+
+           
+        <button class="btn btn-info btn-sm" style="margin-bottom: 5px;width: 45px;" href=""  ng-disabled="kiemTraDaTraLoiChua(quizz)" ng-click="setStart($index)">{{$index+1}}</button> 
+    </span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{progress | number: 2}}%;" aria-valuenow="{{progress | number: 2}}" aria-valuemin="0" aria-valuemax="100">{{progress | number: 2}}%</div>
+      </div>
+    <div class="card-footer text-muted">
+        <div class="but text-center">
+            <button type="button" class="btn btn-outline-primary" ng-click="first()"><i class="fas fa-step-backward"></i></button>
+            <button type="button" class="btn btn-outline-primary" ng-click="prev()"><i class="fas fa-backward"></i></button>
+            <button type="button" class="btn btn-outline-primary" ng-click="next()"><i class="fas fa-forward"></i></button>
+              <button type="button" class="btn btn-outline-primary" ng-click="last()"><i class="fas fa-step-forward"></i></button>
+        </div>
+    </div>
+</div>
+
+

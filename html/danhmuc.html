@@ -1,0 +1,70 @@
+<div class="container">
+        
+        
+    <div class="row">
+      <div ng-repeat="subject in subjects | limitTo:page:start" class="col-lg-3 col-sm-3 col-md-3">
+        <div class="card mb-5 mb-lg-0" style="width: 15rem;">
+          <img class="card-img-top" src="images/logos/{{subject.Logo}}" style="height: 180px;width: 286px;" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{subject.Name}}</h5>
+            <p class="card-text">Đây là một vài dòng giới thiệu về lập trình Android, nhưng mà em ko biết ghi gì nên em ghi như này cho nó dài dài.</p>
+            <a href="quiz.html#!/ps10511/{{subject.Id}}" class="btn btn-primary">Start Quiz</a>
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- 
+      <div class="col-lg-3 col-sm-3 col-md-3">
+        <div class="card mb-5 mb-lg-0" style="width: 15rem;">
+          <img class="card-img-top" src="images/logos/ADAV.jpg" style="height: 180px;width: 286px;" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Lập trình Android</h5>
+            <p class="card-text">Đây là một vài dòng giới thiệu về lập trình Android, nhưng mà em ko biết ghi gì nên em ghi như này cho nó dài dài.</p>
+            <a href="quiz.html" class="btn btn-primary">Start Quiz</a>
+          </div>
+        </div>
+     
+      </div>
+      <div class="col-lg-3">
+        <div class="card mb-5 mb-lg-0" style="width: 15rem;">
+          <img class="card-img-top" src="images/logos/ASNE.png" style="height: 180px;width: 286px;" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Lập trình ASP.NET</h5>
+            <p class="card-text">Đây là một vài dòng giới thiệu về lập trình NET, nhưng mà em ko biết ghi gì nên em ghi như này cho nó dài dài.</p>
+            <a href="quiz.html" class="btn btn-primary">Start Quiz</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="card mb-5 mb-lg-0" style="width: 15rem;">
+          <img class="card-img-top" src="images/logos/JAAV.png" style="height: 180px;width: 286px;" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Lập trình Java</h5>
+            <p class="card-text">Đây là một vài dòng giới thiệu về lập trình Java, nhưng mà em ko biết ghi gì nên em ghi như này cho nó dài dài.</p>
+            <a href="quiz.html" class="btn btn-primary">Start Quiz</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="card mb-5 mb-lg-0" style="width: 15rem;">
+          <img class="card-img-top" src="images/logos/JSPR.png" style="height: 180px;width: 286px;" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Lập trình Javascipt
+            </h5>
+            <p class="card-text">Đây là một vài dòng giới thiệu về lập trình Javascript, nhưng mà em ko biết ghi gì nên em ghi như này cho nó dài dài.</p>
+            <a href="quiz.html" class="btn btn-primary">Start Quiz</a>
+          </div>
+        </div>
+      </div>-->
+    </div>
+    <br>
+    <div class="row card-footer m-0">
+      <p class="text-center mx-auto"> 
+          <button class="btn btn-outline-success" ng-click="prev()"><</button>
+          <button class="btn btn-outline-success" ng-click="next()">></button>
+      </p>
+
+    </div>
+  </div>
